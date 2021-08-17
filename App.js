@@ -1,5 +1,6 @@
+import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, View, Image} from 'react-native';
+import { StyleSheet, Text, View, Image} from 'react-native';
 import {createBottomTabNavigator} from 'react-navigation-tabs';
 import {createAppContainer} from 'react-navigation';
 import ReadStoryScreen from './screens/ReadStoryScreen';
@@ -10,6 +11,7 @@ export default class App extends React.Component {
   return (
     <View style={styles.container}>
       <AppContainer/>
+      <StatusBar style="auto" />
     </View>
   );
   }
@@ -25,8 +27,8 @@ const styles = StyleSheet.create({
 });
 
 var TabNavigator = createBottomTabNavigator({
-  ReadStory:{screens:ReadStoryScreen},
-  WriteStory:{screens:WriteStoryScreen},  
+  ReadStory:{screen:ReadStoryScreen},
+  WriteStory:{screen:WriteStoryScreen},
 },
 {
   defaultNavigationOptions:({navigation})=>({
@@ -45,4 +47,5 @@ var TabNavigator = createBottomTabNavigator({
     }
   })
 })
-const AppContainer = createAppContainer(TabNavigator);
+
+const AppContainer = createAppContainer(TabNavigator)

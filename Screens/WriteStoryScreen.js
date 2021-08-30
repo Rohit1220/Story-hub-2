@@ -1,48 +1,46 @@
 import React from 'react';
-import {
-  Text,
-  View,
-  TouchableOpacity,
-  TextInput,
-  StyleSheet,
-} from 'react-native';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { View, Text, TextInput, TouchableOpacity } from 'react-native';
 import { Header } from 'react-native-elements';
+import db from '../Config'
+import {SafeAreaProvider} from 'react-native-safe-area-context'
 
-export default class WriteStoryScreen extends React.Component {
+export default class WriteStoryScren extends React.Component {
   constructor() {
     super();
-    this.state = {};
+    this.state = {
+      title : '',
+      author : '',
+      Story : '',
+    };
+  }
+  SubmitStory(){
+    db.ref('Story/').update({
+      title:this.state.title,
+      author:this.state.author,
+      story:this.state.story
+    });
   }
   render() {
     return (
-      <View style={styles.container}>
+      <View>
         <SafeAreaProvider>
         <Header
-          backgroundColor={'#9c8210'}
-          centerComponent={{
-            text: 'Story Hub',
-            style: { color: '#fff', fontSize: 20 },
-          }}
+          centerComponent={{ text: 'Write Story', style: { color: '#fff' } }}
         />
-        <TextInput placeholder="Story Title" />
-        <TextInput placeholder="Author" />
-        <TouchableOpacity style={styles.submitButton}>
-          <Text style={styles.submitButtonText}>Submit</Text>
+        <TextInput placeholder="Tiile of the story" onChangeText={(text) => {
+            this.setState({ title: text });
+          }} />
+        <TextInput placeholder="Autor of the story" onChangeText={(text) => {
+            this.setState({ author: text });
+          }}/>
+        <TextInput placeholder="Write Story" multiline={true} onChangeText={(text) => {
+            this.setState({ story: text });
+          }}/>
+        <TouchableOpacity>
+          <Text>Submit</Text>
         </TouchableOpacity>
         </SafeAreaProvider>
       </View>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    alignContent : 'center',
-    alignItems : 'baseline',
-    alignSelf : 'flex-end',
-    backgroundColor : 'green',
-    border : 10,
-    
-  },
-});
